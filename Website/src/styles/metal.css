@@ -1,0 +1,85 @@
+/* Metal text. The sheen loops every 6s and also travels with scroll (--scroll-sheen is set by the scroll loop). */
+.metal {
+  background-image: var(--metal-maroon);
+  background-size: 260% 100%;
+  background-position: calc(var(--sheen) + var(--scroll-sheen, 0%)) 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--maroon-700);
+  animation: metal-sheen 6s var(--ease-in-out) infinite;
+}
+.metal--silver {
+  background-image: var(--metal-silver);
+  color: var(--silver-mid);
+}
+/* SplitText wraps words, so the gradient has to be carried on every piece. */
+.metal .split-word,
+.metal .split-char,
+.metal .split-line {
+  background: inherit;
+  background-size: inherit;
+  background-position: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes metal-sheen {
+  0% {
+    --sheen: 0%;
+  }
+  55%,
+  100% {
+    --sheen: 100%;
+  }
+}
+
+/* A 1px edge that catches light. Add to any positioned element. */
+.metal-edge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--metal-edge);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+.metal-edge--dark::before {
+  background: var(--metal-edge-dark);
+}
+
+/* Pointer sheen: a soft diagonal band that follows --mx. Needs --mx / --my set by usePointerVars. */
+.sheen {
+  --mx: 50%;
+  --my: 50%;
+}
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(240px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.55), transparent 60%),
+    linear-gradient(
+      115deg,
+      transparent calc(var(--mx) - 22%),
+      rgba(255, 255, 255, 0.28) var(--mx),
+      transparent calc(var(--mx) + 22%)
+    );
+  opacity: 0;
+  transition: opacity var(--dur-s) var(--ease-out);
+  mix-blend-mode: soft-light;
+}
+.sheen:hover::after,
+.sheen:focus-within::after {
+  opacity: 1;
+}
