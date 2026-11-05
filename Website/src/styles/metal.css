@@ -1,6 +1,7 @@
 /* Metal text. The sheen loops every 6s and also travels with scroll (--scroll-sheen is set by the scroll loop). */
 .metal {
-  background-image: var(--metal-maroon);
+  --metal-img: var(--metal-maroon);
+  background-image: var(--metal-img);
   background-size: 260% 100%;
   background-position: calc(var(--sheen) + var(--scroll-sheen, 0%)) 50%;
   -webkit-background-clip: text;
@@ -10,19 +11,24 @@
   animation: metal-sheen 6s var(--ease-in-out) infinite;
 }
 .metal--silver {
-  background-image: var(--metal-silver);
+  --metal-img: var(--metal-silver);
+  background-image: var(--metal-img);
   color: var(--silver-mid);
 }
-/* SplitText wraps words, so the gradient has to be carried on every piece. */
+/* SplitText wraps lines, masks, words and chars. The gradient rides a custom property
+   so it reaches every piece through the mask wrappers. */
 .metal .split-word,
-.metal .split-char,
-.metal .split-line {
-  background: inherit;
-  background-size: inherit;
-  background-position: inherit;
+.metal .split-char {
+  background-image: var(--metal-img);
+  background-size: 260% 100%;
+  background-position: calc(var(--sheen) + var(--scroll-sheen, 0%)) 50%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+/* When split into chars, only the chars carry the gradient. */
+.metal .split-word:has(.split-char) {
+  background-image: none;
 }
 
 @keyframes metal-sheen {

@@ -1,0 +1,140 @@
+.features {
+  position: relative;
+  padding-block: var(--section-y);
+  background: var(--paper);
+}
+.head {
+  display: grid;
+  gap: 18px;
+  max-width: 900px;
+  margin-bottom: clamp(48px, 8vw, 96px);
+}
+.title {
+  font-size: clamp(2.25rem, 1.2rem + 3.4vw, 4.25rem);
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.sticky {
+  display: none;
+}
+.blocks {
+  display: grid;
+  gap: clamp(56px, 10vw, 96px);
+}
+.block {
+  display: grid;
+  gap: 12px;
+}
+.num {
+  overflow: clip;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--maroon-700);
+}
+.num span {
+  display: inline-block;
+}
+.blockTitle {
+  font-size: clamp(1.625rem, 1.2rem + 1.4vw, 2.5rem);
+  letter-spacing: -0.03em;
+}
+.blockBody {
+  color: var(--grey-700);
+  max-width: 46ch;
+}
+.inline {
+  margin-top: 16px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--grey-300), 0 24px 50px -24px rgba(61, 10, 20, 0.3);
+}
+
+.perspective {
+  perspective: 1600px;
+}
+.device {
+  padding: 0 10px 10px;
+  transform-origin: 50% 100%;
+}
+.deviceBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 6px;
+  font-size: 11px;
+  color: var(--grey-700);
+}
+.deviceBar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--grey-300);
+}
+.deviceBar span {
+  margin-inline: auto;
+  padding: 3px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+}
+.deviceScreen {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(212, 212, 217, 0.9);
+  background: var(--white);
+}
+.screenLayer {
+  position: absolute;
+  inset: 0;
+}
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+.dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  background: var(--grey-300);
+  transition: width var(--dur-s) var(--ease-out), background-color var(--dur-s) var(--ease-out);
+}
+.dots span[data-on] {
+  width: 24px;
+  background: var(--maroon-700);
+}
+
+/* Desktop with motion: sticky device on the left, blocks scroll past on the right. */
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) and (min-height: 560px) {
+  .layout {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(40px, 5vw, 80px);
+  }
+  .sticky {
+    display: block;
+    position: sticky;
+    top: calc(50vh - 240px);
+    align-self: start;
+  }
+  .block {
+    min-height: 78vh;
+    align-content: center;
+    opacity: 0.35;
+    transition: opacity var(--dur-m) var(--ease-out);
+  }
+  .block[data-current] {
+    opacity: 1;
+  }
+  .block:first-child {
+    min-height: 60vh;
+    align-content: start;
+    padding-top: 6vh;
+  }
+  .inline {
+    display: none;
+  }
+}
