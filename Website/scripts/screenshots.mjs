@@ -31,7 +31,9 @@ const SECTIONS = [
   { name: 'team', id: 'team', at: [0, 0.5] },
   { name: 'contact', id: 'contact', at: [0, 0.5] },
   { name: 'footer', id: 'footer', at: [0, 1] },
-].filter((s) => !only.length || only.includes(s.name))
+]
+  .map((s, i) => ({ ...s, n: i + 1 }))
+  .filter((s) => !only.length || only.includes(s.name))
 
 await mkdir(out, { recursive: true })
 const browser = await chromium.launch({ channel: 'chrome' })
@@ -61,7 +63,7 @@ for (const vp of VIEWPORTS) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
   if (overflow > 0) errors.push(`[${vp.name}] horizontal overflow ${overflow}px`)
 
-  for (const [i, s] of SECTIONS.entries()) {
+  for (const s of SECTIONS) {
     for (const f of s.at) {
       const y = await page.evaluate(
         ({ id, f }) => {
@@ -85,7 +87,7 @@ for (const vp of VIEWPORTS) {
         else window.scrollTo(0, y)
       }, y)
       await page.waitForTimeout(1300)
-      const file = `${vp.name}-${String(i + 1).padStart(2, '0')}-${s.name}-${Math.round(f * 100)}${reduced ? '-reduced' : ''}.png`
+      const file = `${vp.name}-${String(s.n).padStart(2, '0')}-${s.name}-${Math.round(f * 100)}${reduced ? '-reduced' : ''}.png`
       await page.screenshot({ path: path.join(out, file) })
     }
   }

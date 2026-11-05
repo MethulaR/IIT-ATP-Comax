@@ -90,8 +90,7 @@ select {
   color: inherit;
 }
 
-ul[role='list'],
-ol[role='list'] {
+:where(ul[role='list'], ol[role='list']) {
   list-style: none;
   margin: 0;
   padding: 0;

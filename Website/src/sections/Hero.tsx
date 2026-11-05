@@ -12,6 +12,7 @@ import { useGsap } from '../motion/useGsap'
 import { DUR, EASE } from '../motion/motion'
 import { onIntro } from '../motion/intro'
 import { splitReveal } from '../motion/reveals'
+import { QR } from '../mocks/qr'
 import u from '../mocks/ui.module.css'
 import s from './Hero.module.css'
 
@@ -78,12 +79,6 @@ function PortalCards() {
     </>
   )
 }
-
-// A tiny fixed pattern that reads as a QR code.
-export const QR = '111011101101010111011101001010001110111010101011101100010101110111011111011101'
-  .split('')
-  .slice(0, 81)
-  .map((c) => c === '1')
 
 export function Hero() {
   const root = useRef<HTMLElement>(null)
