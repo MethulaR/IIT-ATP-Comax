@@ -22,6 +22,7 @@
 }
 .cols ul {
   display: grid;
+  align-content: start;
   gap: 2px;
 }
 .cols a {

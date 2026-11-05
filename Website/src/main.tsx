@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import '@fontsource-variable/inter-tight'
 import '@fontsource-variable/inter'
@@ -10,10 +10,20 @@ import { App } from './App'
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
 
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')!
+const app = (
   <StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 )
+
+// Production pages ship prerendered HTML (scripts/prerender.mjs). Hydrate it when it matches this route.
+const prerendered = root.dataset.route
+const path = location.pathname.replace(/\/$/, '') || '/'
+if (prerendered && prerendered === path) hydrateRoot(root, app)
+else {
+  root.textContent = ''
+  createRoot(root).render(app)
+}

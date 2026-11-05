@@ -121,18 +121,37 @@
     align-self: start;
   }
   .block {
+    position: relative;
     min-height: 78vh;
     align-content: center;
-    opacity: 0.35;
-    transition: opacity var(--dur-m) var(--ease-out);
+    padding-left: 28px;
   }
-  .block[data-current] {
-    opacity: 1;
+  /* Active block: a maroon rule grows beside it. Inactive text keeps full contrast. */
+  .block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 2px;
+    height: 160px;
+    margin-top: -80px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--maroon-300), var(--maroon-700));
+    transform: scaleY(0);
+    transition: transform var(--dur-m) var(--ease-out);
+  }
+  .block[data-current]::before {
+    transform: scaleY(1);
+  }
+  .block .blockTitle {
+    color: var(--grey-700);
+    transition: color var(--dur-m) var(--ease-out);
+  }
+  .block[data-current] .blockTitle {
+    color: var(--ink);
   }
   .block:first-child {
     min-height: 60vh;
-    align-content: start;
-    padding-top: 6vh;
   }
   .inline {
     display: none;

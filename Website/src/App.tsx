@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useLayoutEffect } from 'react'
+import { Suspense, useEffect, useLayoutEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Nav } from './components/Nav'
 import { Cursor } from './components/Cursor'
@@ -8,8 +8,8 @@ import { Home } from './pages/Home'
 import { ScrollTrigger } from './motion/gsap'
 import { bindNativeSheen, scrollState, scrollToTarget, startSmoothScroll } from './motion/scroll'
 
-const Privacy = lazy(() => import('./pages/Privacy'))
-const NotFound = lazy(() => import('./pages/NotFound'))
+import Privacy from './pages/Privacy'
+import NotFound from './pages/NotFound'
 
 function useRouteScroll() {
   const { pathname, hash } = useLocation()

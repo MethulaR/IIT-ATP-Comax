@@ -59,7 +59,8 @@ export function Loader() {
     const reduce = prefersReducedMotion()
     const quick = seenBefore()
     let exited = false
-    const t0 = performance.now()
+    // Measured from navigation start, so the intro never holds the page past MAX_MS in total.
+    const t0 = 0
 
     const finish = () => {
       html.classList.remove('is-loading')

@@ -3,7 +3,6 @@ import { Glass } from '../components/Glass'
 import { Button } from '../components/Button'
 import { Orbs } from '../components/Orbs'
 import { Fit } from '../components/Fit'
-import { useMedia } from '../components/useMedia'
 import { DashboardMock } from '../mocks/DashboardMock'
 import { PORTAL_URL } from '../config/site'
 import { HERO } from '../config/copy'
@@ -82,7 +81,6 @@ function PortalCards() {
 
 export function Hero() {
   const root = useRef<HTMLElement>(null)
-  const small = useMedia('(max-width: 639px)')
 
   useGsap(root, (q, el) => {
     const $ = gsap.utils.selector(el)
@@ -206,15 +204,17 @@ export function Hero() {
             <div data-dash-in className={s.dashIn}>
               <Glass className={s.dashGlass} radius="xl" specular={false}>
                 <div className={s.dashScreen}>
-                  {small ? (
-                    <Fit w={560} h={520}>
-                      <DashboardMock compact />
-                    </Fit>
-                  ) : (
+                  {/* Both layouts ship in the HTML. CSS picks one, so nothing jumps on hydration. */}
+                  <div className={s.wide}>
                     <Fit w={1040} h={640}>
                       <DashboardMock />
                     </Fit>
-                  )}
+                  </div>
+                  <div className={s.narrow}>
+                    <Fit w={560} h={520}>
+                      <DashboardMock compact />
+                    </Fit>
+                  </div>
                 </div>
               </Glass>
               <div className={s.veil} data-dash-veil aria-hidden="true" />

@@ -172,3 +172,15 @@
     display: none;
   }
 }
+
+.narrow {
+  display: none;
+}
+@media (max-width: 639px) {
+  .wide {
+    display: none;
+  }
+  .narrow {
+    display: block;
+  }
+}
