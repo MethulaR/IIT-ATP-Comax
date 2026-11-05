@@ -25,15 +25,19 @@ export function HowItWorks() {
     gsap.fromTo($('[data-line]'), { attr: { 'stroke-dashoffset': 1 } }, { attr: { 'stroke-dashoffset': 0 }, ease: EASE.scrub, scrollTrigger: draw })
     gsap.fromTo($('[data-tip]'), { y: 0 }, { y: () => track.offsetHeight, ease: EASE.scrub, scrollTrigger: { ...draw, invalidateOnRefresh: true } })
 
-    steps.forEach((st, i) => {
-      const node = st.querySelector('[data-node]') as HTMLElement
-      // Lights up when the line reaches it, goes dark again if you scroll back above it.
-      ScrollTrigger.create({
-        trigger: node,
-        start: 'center 60%',
-        onEnter: () => st.setAttribute('data-lit', ''),
-        onLeaveBack: () => st.removeAttribute('data-lit'),
+    // A node lights up once the line's tip (60% of the viewport) has reached it, and goes dark if you
+    // scroll back above it. Read from positions each update, so fast scrolls never skip one.
+    const nodes = steps.map((st) => st.querySelector('[data-node]') as HTMLElement)
+    const light = () => {
+      const tip = window.innerHeight * 0.6
+      nodes.forEach((n, i) => {
+        const r = n.getBoundingClientRect()
+        steps[i].toggleAttribute('data-lit', r.top + r.height / 2 < tip)
       })
+    }
+    ScrollTrigger.create({ trigger: track, start: 'top bottom', end: 'bottom top', onUpdate: light, onRefresh: light })
+    steps.forEach((st, i) => {
+      const node = nodes[i]
       splitReveal(st.querySelector('h3') as HTMLElement, { variant: i % 2 ? 'words' : 'wipe', trigger: node, start: 'center 64%' })
       gsap.from(st.querySelector('p'), {
         opacity: 0,

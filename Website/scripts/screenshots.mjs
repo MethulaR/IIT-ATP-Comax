@@ -57,7 +57,7 @@ for (const vp of VIEWPORTS) {
     await page.screenshot({ path: path.join(out, `${vp.name}-00-loader${reduced ? '-reduced' : ''}.png`) })
   }
   // Wait for the loader to finish (max 3.2s plus the lens exit).
-  await page.waitForFunction(() => !document.documentElement.classList.contains('is-loading'), null, { timeout: 8000 })
+  await page.waitForFunction(() => document.documentElement.dataset.hydrated === 'true' && !document.documentElement.classList.contains('is-loading'), null, { timeout: 8000 })
   await page.waitForTimeout(1600)
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)

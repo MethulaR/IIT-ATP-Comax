@@ -35,6 +35,7 @@ export function App() {
 
   useEffect(() => {
     detectRefraction()
+    document.documentElement.dataset.hydrated = 'true' // test hook: the app is interactive
     const lenis = startSmoothScroll()
     const unbind = lenis ? () => {} : bindNativeSheen()
     // Positions depend on fonts and images. Refresh once they are in.

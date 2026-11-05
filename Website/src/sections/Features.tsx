@@ -71,16 +71,20 @@ export function Features() {
       $('[data-dot]').forEach((d, j) => d.toggleAttribute('data-on', j === i))
       current = i
     }
-    blocks.forEach((b, i) => {
-      ScrollTrigger.create({
-        trigger: b,
-        start: 'top 55%',
-        end: 'bottom 55%',
-        onToggle: (self) => {
-          b.toggleAttribute('data-current', self.isActive)
-          if (self.isActive) show(i)
-        },
+    // The active block is the last one whose top has crossed 55% of the viewport.
+    // Derived from positions on every update, so fast scrolls and jumps can never leave a stale screen.
+    const sync = () => {
+      const line = window.innerHeight * 0.55
+      let i = 0
+      blocks.forEach((b, j) => {
+        if (b.getBoundingClientRect().top < line) i = j
       })
+      blocks.forEach((b, j) => b.toggleAttribute('data-current', j === i))
+      show(i)
+    }
+    ScrollTrigger.create({ trigger: $('ol')[0], start: 'top bottom', end: 'bottom top', onUpdate: sync, onRefresh: sync })
+    blocks[0].setAttribute('data-current', '')
+    blocks.forEach((b) => {
       gsap.from(b.querySelector('[data-num]'), {
         yPercent: 100,
         duration: DUR.m,

@@ -69,13 +69,13 @@ export function Trust() {
       { yPercent: 100, ease: EASE.scrub, scrollTrigger: { trigger: el, start: 'top 60%', end: 'bottom 40%', scrub: 0.8 } },
     )
     gsap.fromTo($('[data-glow]'), { yPercent: -20 }, { yPercent: 20, ease: EASE.scrub, scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } })
+    // Cards light up once the beam (62% of the viewport) has passed their top edge.
+    const light = () => {
+      const beam = window.innerHeight * 0.62
+      cards.forEach((c) => c.toggleAttribute('data-lit', c.getBoundingClientRect().top < beam))
+    }
+    ScrollTrigger.create({ trigger: el, start: 'top bottom', end: 'bottom top', onUpdate: light, onRefresh: light })
     cards.forEach((c, i) => {
-      ScrollTrigger.create({
-        trigger: c,
-        start: 'top 62%',
-        onEnter: () => c.setAttribute('data-lit', ''),
-        onLeaveBack: () => c.removeAttribute('data-lit'),
-      })
       gsap.from(c, {
         y: 50,
         rotateX: -12,
