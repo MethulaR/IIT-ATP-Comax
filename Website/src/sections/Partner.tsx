@@ -7,6 +7,8 @@ import { gsap } from '../motion/gsap'
 import { useGsap } from '../motion/useGsap'
 import { DUR, EASE } from '../motion/motion'
 import { fadeIn } from '../motion/reveals'
+import logo480 from '../assets/visionex-logo-480.webp'
+import logo960 from '../assets/visionex-logo-960.webp'
 import s from './Partner.module.css'
 
 export function Partner() {
@@ -41,10 +43,18 @@ export function Partner() {
 
         <Glass as="article" tone="strong" radius="xl" className={s.card} data-card aria-label={`${PARTNER.name}, ${PARTNER.role}`}>
           <div className={s.logoBox}>
-            {/* Placeholder until the approved VisioNEX logo file is supplied. */}
-            <div className={s.logo} role="img" aria-label="VisioNEX logo placeholder">
-              <span className={s.logoWord}>{PARTNER.name}</span>
-              <span className={s.logoNote}>Logo placeholder</span>
+            <div className={s.logo}>
+              <img
+                className={s.logoImg}
+                src={logo960}
+                srcSet={`${logo480} 480w, ${logo960} 960w`}
+                sizes="(min-width: 860px) 380px, 80vw"
+                width={960}
+                height={279}
+                alt="VisioNEX logo"
+                loading="lazy"
+                decoding="async"
+              />
               <span className={s.sweep} data-sweep aria-hidden="true" />
             </div>
           </div>

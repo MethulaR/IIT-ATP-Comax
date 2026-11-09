@@ -64,7 +64,6 @@ Set these in `.env` (committed defaults), `.env.local` (your machine) or the hos
 
 - `[Role]` for each team member: `TEAM` in `src/config/copy.ts`
 - `[Partner quote, awaiting approval]`: `PARTNER.quote`
-- The VisioNEX logo: `src/sections/Partner.tsx` (swap the placeholder box for the approved file)
 - `[contact email]` and the social links: `CONTACT` in `src/config/site.ts`
 - The privacy policy marks itself `[Draft, to be reviewed before launch]` and has a `[date]`
 
