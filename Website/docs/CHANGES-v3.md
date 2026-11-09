@@ -64,3 +64,7 @@ Branch `feature/comax-landing-v3`, one commit per item. Screenshots (1440×900 a
 
 - `npm run check`: all pass on the production build. That covers no horizontal scroll and no console errors at six widths, the loader, keyboard, accessibility, reduced motion and the form.
 - The nav scroll spy (`scripts/v2-spy.mjs`, updated for the new sections) passes going down and back up, on link click, and in reduced motion.
+
+## Cursor
+
+The dot and lagging ring are replaced by a maroon diamond marker that leans into its direction of travel and stretches with speed, with a tapered maroon ink trail that dries up at rest. Over links it opens into a square target frame, and a click throws four small sparks. Desktop fine pointers only; off on touch and in reduced motion. Screenshots: `cursor-moving`, `cursor-link`, `cursor-click`.
