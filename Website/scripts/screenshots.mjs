@@ -23,7 +23,6 @@ const SECTIONS = [
   { name: 'problem', id: 'product', at: [0, 0.3, 0.6, 0.95] },
   { name: 'portals', id: 'portals', at: [0, 0.35, 0.7, 0.98] },
   { name: 'features', id: 'features', at: [0, 0.2, 0.5, 0.85] },
-  { name: 'scoring', id: 'scoring', at: [0, 0.5, 0.95] },
   { name: 'how', id: 'how', at: [0, 0.5, 0.9] },
   { name: 'trust', id: 'trust', at: [0, 0.5] },
   { name: 'partners', id: 'partners', at: [0, 0.5] },

@@ -9,12 +9,12 @@ export const FORM_ENDPOINT: string = import.meta.env.VITE_FORM_ENDPOINT || ''
 /**
  * Nav links and the sections each one covers for the scroll spy.
  * A link stays active while any of its sections crosses the middle of the screen.
- * Sections with no link of their own (scoring, trust, marquee) belong to the link above them.
+ * Sections with no link of their own (trust, marquee) belong to the link above them.
  */
 export const NAV_LINKS = [
   { label: 'Product', hash: '#product', sections: ['product'] },
   { label: 'Portals', hash: '#portals', sections: ['portals'] },
-  { label: 'Features', hash: '#features', sections: ['features', 'scoring'] },
+  { label: 'Features', hash: '#features', sections: ['features'] },
   { label: 'How it works', hash: '#how', sections: ['how', 'trust'] },
   { label: 'Partners', hash: '#partners', sections: ['partners', 'marquee'] },
   { label: 'Team', hash: '#team', sections: ['team'] },

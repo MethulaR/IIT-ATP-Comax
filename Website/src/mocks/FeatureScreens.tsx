@@ -88,7 +88,7 @@ export function RoundsScreen() {
               </div>
             ))}
           </div>
-          <div className={f.score}>Auto scored <span className="num">50 / 50</span></div>
+          <div className={f.score}>Auto scored, all tests passed</div>
         </div>
       </div>
     </div>
@@ -102,13 +102,13 @@ export function JudgingScreen() {
       <div className={f.split}>
         <div className={u.card}>
           {[
-            ['Innovation', '30%', 78, 0],
-            ['Design quality', '25%', 84, 1],
-            ['Technical depth', '25%', 70, 0],
-            ['Presentation', '20%', 90, 0],
-          ].map(([c, w, v, a]) => (
+            ['Innovation', 78, 0],
+            ['Design quality', 84, 1],
+            ['Technical depth', 70, 0],
+            ['Presentation', 90, 0],
+          ].map(([c, v, a]) => (
             <div key={c as string} className={f.crit}>
-              <div className={f.capHead}><span>{c}</span><span className={u.sub}>weight {w}</span></div>
+              <div className={f.capHead}><span>{c}</span></div>
               <div className={f.slider}>
                 <span className={u.fill} style={{ width: `${v}%` }} />
                 <i className={a ? f.knobMove : undefined} style={{ left: `${v}%` }} />
@@ -119,8 +119,7 @@ export function JudgingScreen() {
         <div className={f.stack}>
           <div className={u.card}>
             <div className={u.cardTitle}>Head judge weighting</div>
-            <div className={u.tileValue}>1.5x</div>
-            <p className={u.sub}>Applied to the final pitch round</p>
+            <p className={u.sub}>Set by the organizer for each round</p>
           </div>
           <div className={u.card}>
             <div className={u.cardTitle}>Mark correction</div>

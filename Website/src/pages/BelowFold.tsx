@@ -5,7 +5,6 @@ import { createSpy, killSpy } from '../motion/spy'
 import { Problem } from '../sections/Problem'
 import { Portals } from '../sections/Portals'
 import { Features } from '../sections/Features'
-import { Scoring } from '../sections/Scoring'
 import { HowItWorks } from '../sections/HowItWorks'
 import { Trust } from '../sections/Trust'
 import { Partner } from '../sections/Partner'
@@ -41,7 +40,6 @@ export default function BelowFold() {
       <Problem />
       <Portals />
       <Features />
-      <Scoring />
       <HowItWorks />
       <Trust />
       <Partner />

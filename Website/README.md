@@ -78,7 +78,7 @@ src/
                useGsap.ts, reveals.ts, intro.ts
   components/  Glass, Button (magnetic, sheen), Monogram, Nav, Footer, Cursor, Orbs, Fit, Reveal
   mocks/       coded product screens with generic event data
-  sections/    Loader, Hero, Problem, Portals, Features, Scoring, HowItWorks, Trust, Partner, Marquee, Team, Contact
+  sections/    Loader, Hero, Problem, Portals, Features, HowItWorks, Trust, Partner, Marquee, Team, Contact
   pages/       Home, BelowFold (one code split chunk), Privacy, NotFound
   entry-server.tsx   used only by the build to prerender
 scripts/       prerender, icons, screenshots, checks, recording

@@ -37,7 +37,7 @@ The hero is prerendered underneath from the first frame, so LCP is not held back
 | Problem | Pinned scrub. Spreadsheet cells, red rows, a form, a chat, a pasted leaderboard and duplicate tabs fly in tilted, straighten, turn into clean CoMax widgets and snap into one glass board. Three captions swap, then "Now it all lives in CoMax." |
 | Portals | Pinned horizontal track of four glass panels. A metal progress bar and counter, mocks drifting against their panels, and a tilt driven by Lenis velocity. |
 | Features | Sticky glass device on the left, six blocks on the right. Screens crossfade with a blur as each block crosses the centre, and each screen runs its own loop: verification flip, tests ticking green, a judge slider, totals counting up, a QR scan line, search typing. |
-| Scoring | Pinned scrub. A metal ring of four segments sized by points draws in sequence, the centre counts from 0 to 300, labels and legend rows land as segments complete, and a sheen rotates round the ring. |
+| Scoring | Removed in change request 3. How marking works is up to each organizer. |
 | How it works | A vertical SVG line draws with the scroll and a glowing tip rides it. Nodes turn maroon as the tip reaches them, and titles alternate between wipe and word reveals. |
 | Trust | Full-bleed maroon. A beam of light travels down the section and cards light up as it passes. Silver metal chars headline, metal icons with an SVG sheen. |
 | Partner | Calm. The card settles in, a light band sweeps across the VisioNEX logo placeholder, and the reserved slots fade up. |

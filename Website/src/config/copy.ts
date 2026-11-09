@@ -98,18 +98,6 @@ export const FEATURES = {
   ],
 }
 
-export const SCORING = {
-  eyebrow: 'Scoring you configure',
-  title: 'Your rounds, your weights. CoMax does the maths.',
-  body: 'An example of a scoring setup an organizer could build. Change the rounds, the points and the weights to match your event.',
-  segments: [
-    { round: 'Round 1', name: 'Design', points: 100 },
-    { round: 'Round 2', name: 'Coding', points: 50 },
-    { round: 'Round 3', name: 'Final pitch', points: 100 },
-    { round: 'Extra', name: 'Workshops', points: 50 },
-  ],
-}
-
 export const HOW = {
   eyebrow: 'How it works',
   title: 'From first idea to final record.',

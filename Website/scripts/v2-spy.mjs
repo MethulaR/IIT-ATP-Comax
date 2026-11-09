@@ -8,7 +8,7 @@ const base = args.find((a) => a.startsWith('http')) || 'http://127.0.0.1:5173'
 const out = (args.find((a) => a.startsWith('--out=')) || '--out=docs/screenshots/v2').replace('--out=', '')
 const reduced = args.includes('--reduced')
 const EXPECT = [
-  ['top', null], ['product', 'product'], ['portals', 'portals'], ['features', 'features'], ['scoring', 'features'],
+  ['top', null], ['product', 'product'], ['portals', 'portals'], ['features', 'features'],
   ['how', 'how'], ['trust', 'how'], ['partners', 'partners'], ['team', 'team'],
 ]
 const browser = await chromium.launch({ channel: 'chrome' })
