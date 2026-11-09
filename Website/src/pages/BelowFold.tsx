@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { ScrollTrigger } from '../motion/gsap'
 import { MQ } from '../motion/motion'
 import { createSpy, killSpy } from '../motion/spy'
+import { Platform } from '../sections/Platform'
 import { Problem } from '../sections/Problem'
 import { Portals } from '../sections/Portals'
 import { Features } from '../sections/Features'
@@ -37,6 +38,7 @@ export default function BelowFold() {
   }, [])
   return (
     <>
+      <Platform />
       <Problem />
       <Portals />
       <Features />

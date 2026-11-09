@@ -8,6 +8,13 @@ export const HERO = {
   sub: 'CoMax takes your competition from first registration to final results, then keeps every edition on record.',
 }
 
+export const PLATFORM = {
+  eyebrow: 'The platform',
+  title: 'Your whole event, on one screen.',
+  sub: 'Registrations, teams, rounds, judging, results, attendance and history, all in one organizer view.',
+  points: ['See every registration at a glance', 'Live leaderboard as marks come in', 'Attendance as people check in'],
+}
+
 export const PROBLEM = {
   eyebrow: 'The problem',
   title: 'From spreadsheets to one platform',

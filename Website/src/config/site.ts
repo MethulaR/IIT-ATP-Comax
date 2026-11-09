@@ -12,7 +12,7 @@ export const FORM_ENDPOINT: string = import.meta.env.VITE_FORM_ENDPOINT || ''
  * Sections with no link of their own (trust, marquee) belong to the link above them.
  */
 export const NAV_LINKS = [
-  { label: 'Product', hash: '#product', sections: ['product'] },
+  { label: 'Product', hash: '#platform', sections: ['platform', 'product'] },
   { label: 'Portals', hash: '#portals', sections: ['portals'] },
   { label: 'Features', hash: '#features', sections: ['features'] },
   { label: 'How it works', hash: '#how', sections: ['how', 'trust'] },

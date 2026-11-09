@@ -20,6 +20,7 @@ const VIEWPORTS = [
 // Each section: element id and fractions of its scroll range to capture.
 const SECTIONS = [
   { name: 'hero', id: 'top', at: [0, 0.35, 0.7] },
+  { name: 'platform', id: 'platform', at: [0] },
   { name: 'problem', id: 'product', at: [0, 0.3, 0.6, 0.95] },
   { name: 'portals', id: 'portals', at: [0, 0.35, 0.7, 0.98] },
   { name: 'features', id: 'features', at: [0, 0.2, 0.5, 0.85] },
