@@ -9,6 +9,8 @@ import { DUR, EASE } from '../motion/motion'
 import { fadeIn } from '../motion/reveals'
 import logo480 from '../assets/visionex-logo-480.webp'
 import logo960 from '../assets/visionex-logo-960.webp'
+import iit240 from '../assets/iit-logo-240.webp'
+import iit480 from '../assets/iit-logo-480.webp'
 import s from './Partner.module.css'
 
 export function Partner() {
@@ -73,6 +75,20 @@ export function Partner() {
                 <li key={c}>{c}</li>
               ))}
             </ul>
+            <div className={s.org} data-line>
+              <span className={s.orgLabel}>Organised by</span>
+              <img
+                className={s.orgLogo}
+                src={iit480}
+                srcSet={`${iit240} 240w, ${iit480} 480w`}
+                sizes="150px"
+                width={480}
+                height={197}
+                alt="Informatics Institute of Technology"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <blockquote className={s.quote} data-line>
               <p>{PARTNER.quote}</p>
             </blockquote>
