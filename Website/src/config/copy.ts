@@ -134,7 +134,6 @@ export const PARTNER = {
   about: 'A school hackathon by IIT Sri Lanka, held in Colombo, Galle and Kurunegala.',
   context: 'VisioNEX brings together schools across Sri Lanka for a multi round hackathon. CoMax was shaped around how it runs.',
   cities: ['Colombo', 'Galle', 'Kurunegala'],
-  quote: '[Partner quote, awaiting approval]',
 }
 
 export const MARQUEE = ['Hackathons', 'Quiz contests', 'Design challenges', 'Coding rounds', 'Judging', 'Attendance', 'Results']

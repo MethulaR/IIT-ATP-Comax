@@ -27,7 +27,6 @@ export function Partner() {
     // A band of light sweeps across the logo once, like metal catching a lamp.
     tl.fromTo($('[data-sweep]'), { xPercent: -120 }, { xPercent: 120, duration: 1.4, ease: EASE.inOut }, 0.35)
     tl.from($('[data-line]'), { y: 20, opacity: 0, duration: DUR.m, ease: EASE.out, stagger: 0.08 }, 0.4)
-    tl.from($('[data-slot]'), { opacity: 0, y: 20, duration: DUR.m, ease: EASE.out, stagger: 0.08 }, 0.6)
   }, [])
 
   return (
@@ -89,19 +88,8 @@ export function Partner() {
                 decoding="async"
               />
             </div>
-            <blockquote className={s.quote} data-line>
-              <p>{PARTNER.quote}</p>
-            </blockquote>
           </div>
         </Glass>
-
-        <div className={s.slots} aria-label="Space reserved for future partners" role="group">
-          {[0, 1, 2, 3].map((i) => (
-            <div key={i} className={s.slot} data-slot>
-              <span>Future partner</span>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )
