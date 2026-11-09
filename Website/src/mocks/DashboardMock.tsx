@@ -7,12 +7,17 @@ const LEADERS = [
   ['2', 'Team Kestrel', '261'],
   ['3', 'Byte Club', '248'],
   ['4', 'Northwind', '239'],
+  ['5', 'Pixel Forge', '231'],
+  ['6', 'Quantum Owls', '224'],
+  ['7', 'Delta Nine', '218'],
+  ['8', 'Code Harbour', '209'],
 ]
 
 /** The organizer overview for a generic event. Decorative, described by its label. */
-export function DashboardMock({ compact = false }: { compact?: boolean }) {
+/** fill: stretch to the height of the box. The data-count, data-bars and data-row hooks drive the arrival animation. */
+export function DashboardMock({ compact = false, fill = false }: { compact?: boolean; fill?: boolean }) {
   return (
-    <div className={u.screen} role="img" aria-label="CoMax organizer dashboard for Spring Hackathon 2027, showing teams, judges, rounds, check ins and a live leaderboard">
+    <div className={u.screen} data-fill={fill || undefined} role="img" aria-label="CoMax organizer dashboard for Spring Hackathon 2027, showing teams, judges, rounds, check ins and a live leaderboard">
       <div className={u.chrome} aria-hidden="true">
         <i />
         <i />
@@ -52,7 +57,7 @@ export function DashboardMock({ compact = false }: { compact?: boolean }) {
             ].map(([l, v]) => (
               <div key={l} className={u.tile}>
                 <div className={u.tileLabel}>{l}</div>
-                <div className={u.tileValue}>{v}</div>
+                <div className={u.tileValue} data-count={v}>{v}</div>
               </div>
             ))}
           </div>
@@ -68,8 +73,8 @@ export function DashboardMock({ compact = false }: { compact?: boolean }) {
             <div className={u.card}>
               <div className={u.cardTitle}>Leaderboard</div>
               <div className={u.rows}>
-                {LEADERS.map(([r, n, p]) => (
-                  <div key={n} className={u.row}>
+                {(fill ? LEADERS : LEADERS.slice(0, 4)).map(([r, n, p]) => (
+                  <div key={n} className={u.row} data-row>
                     <span className={u.rank}>{r}</span>
                     <span>{n}</span>
                     <span>{p}</span>
