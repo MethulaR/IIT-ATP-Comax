@@ -74,7 +74,7 @@ src/
   motion/      gsap.ts (plugins, registered once), motion.ts (eases, durations, media queries),
                scroll.ts (Lenis on the GSAP ticker, shared velocity), spy.ts (nav scroll spy),
                useGsap.ts, reveals.ts, intro.ts
-  components/  Glass, Button (magnetic, sheen), Monogram, Nav, Footer, Cursor, Orbs, Fit, Reveal
+  components/  Glass, Button (magnetic, sheen), Monogram, Nav, Footer, Orbs, Fit, Reveal
   mocks/       coded product screens with generic event data
   sections/    Loader, Hero, Problem, Portals, Features, HowItWorks, Trust, Partner, Marquee, Team, Contact
   pages/       Home, BelowFold (one code split chunk), Privacy, NotFound

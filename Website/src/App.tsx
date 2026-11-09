@@ -1,7 +1,6 @@
 import { Suspense, useEffect, useLayoutEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Nav } from './components/Nav'
-import { Cursor } from './components/Cursor'
 import { LiquidFilter, detectRefraction } from './components/LiquidFilter'
 import { Loader } from './sections/Loader'
 import { Home } from './pages/Home'
@@ -75,7 +74,6 @@ export function App() {
         </Suspense>
       </main>
       <div className="noise" aria-hidden="true" />
-      <Cursor />
     </>
   )
 }
