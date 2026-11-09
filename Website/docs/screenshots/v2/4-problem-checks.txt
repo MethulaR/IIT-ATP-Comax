@@ -1,0 +1,14 @@
+ScrollTrigger start 2160px, end 3510px, distance 1350px = 1.5 screens
+PASS section completes in 1.5 screens of scroll
+PASS beat 1: no card overlaps the headline or caption (caption 1, step "1 of 3", 44.16px, cards opacity 0.85)
+PASS beat 1: contrast ink 16.4:1, highlight 11.3:1 on rgb(249,248,249)
+PASS beat 2: no card overlaps the headline or caption (caption 2, step "2 of 3", 44.16px, cards opacity 0.85)
+PASS beat 2: contrast ink 16.4:1, highlight 11.3:1 on rgb(249,248,249)
+PASS beat 3: no card overlaps the headline or caption (caption 3, step "3 of 3", 44.16px, cards opacity 0.85)
+PASS beat 3: contrast ink 16.4:1, highlight 11.3:1 on rgb(249,248,248)
+PASS beat 4: no card overlaps the headline or caption (caption 4, step "3 of 3", 44.16px, cards opacity 1)
+PASS beat 4: contrast ink 16.3:1 on rgb(249,247,248)
+PASS snap from 0.2 settles on a beat (0.330)
+PASS snap from 0.45 settles on a beat (0.660)
+PASS snap from 0.8 settles on a beat (1.000)
+PASS mobile: section is not pinned

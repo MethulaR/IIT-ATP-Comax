@@ -12,7 +12,7 @@ import s from './Problem.module.css'
 
 type Piece = {
   key: string
-  /** Scatter offset as fractions of the viewport, plus a small rotation in degrees. */
+  /** Scatter offset as fractions of the viewport (x sideways, y down only), plus a small rotation in degrees. */
   scatter: [number, number, number]
   messy: React.ReactNode
   clean: React.ReactNode
@@ -21,7 +21,7 @@ type Piece = {
 const PIECES: Piece[] = [
   {
     key: 'marks',
-    scatter: [-0.3, -0.2, -9],
+    scatter: [-0.34, 0.06, -9],
     messy: (
       <div className={s.sheet}>
         <div className={s.file}>marks_final_v3.xlsx</div>
@@ -45,7 +45,7 @@ const PIECES: Piece[] = [
   },
   {
     key: 'form',
-    scatter: [0.02, -0.34, 6],
+    scatter: [-0.06, 0.2, 6],
     messy: (
       <div className={s.form}>
         <div className={s.file}>Registration form (copy 2)</div>
@@ -68,7 +68,7 @@ const PIECES: Piece[] = [
   },
   {
     key: 'chat',
-    scatter: [0.32, -0.16, 10],
+    scatter: [0.36, 0.04, 10],
     messy: (
       <div className={s.chat}>
         <p className={s.bubble}>who has the latest marks?</p>
@@ -86,7 +86,7 @@ const PIECES: Piece[] = [
   },
   {
     key: 'board',
-    scatter: [-0.34, 0.2, 7],
+    scatter: [-0.4, 0.26, 7],
     messy: (
       <div className={s.paste}>
         <div className={s.file}>leaderboard (copied).txt</div>
@@ -107,7 +107,7 @@ const PIECES: Piece[] = [
   },
   {
     key: 'tabs',
-    scatter: [0.04, 0.3, -6],
+    scatter: [0.08, 0.34, -6],
     messy: (
       <div className={s.tabs}>
         <span>Marks FINAL</span>
@@ -128,7 +128,7 @@ const PIECES: Piece[] = [
   },
   {
     key: 'rows',
-    scatter: [0.33, 0.22, -10],
+    scatter: [0.4, 0.24, -10],
     messy: (
       <div className={s.redrows}>
         <div className={s.file}>attendance.csv</div>
@@ -148,6 +148,25 @@ const PIECES: Piece[] = [
   },
 ]
 
+/** Each caption's small illustration on phones: one messy tool per caption. */
+const STEP_PIECES = ['marks', 'form', 'tabs']
+
+/** Caption text with its key words in maroon. */
+function Caption({ text, highlight }: { text: string; highlight: string }) {
+  const i = text.indexOf(highlight)
+  if (i < 0) return <>{text}</>
+  return (
+    <>
+      {text.slice(0, i)}
+      <span className={s.key}>{highlight}</span>
+      {text.slice(i + highlight.length)}
+    </>
+  )
+}
+
+/** Scroll progress where each state is fully readable. Snap settles on these. */
+const BEATS = [0, 0.33, 0.66, 1]
+
 export function Problem() {
   const root = useRef<HTMLElement>(null)
 
@@ -164,52 +183,83 @@ export function Problem() {
     const scatterOf = (p: HTMLElement) => (p.dataset.scatter || '0,0,0').split(',').map(Number)
 
     if (q.desktop) {
+      const head = $('[data-head]')[0] as HTMLElement
+      const grid = $('[data-grid]')[0] as HTMLElement
+      const caps = $('[data-cap]') as HTMLElement[]
+      const dots = $('[data-dot]') as HTMLElement[]
+      const label = $('[data-step-label]')[0] as HTMLElement
+      // Layout position inside the section, ignoring transforms.
+      const layoutTop = (n: HTMLElement) => {
+        let y = 0
+        for (let c: HTMLElement | null = n; c && c !== el; c = c.offsetParent as HTMLElement | null) y += c.offsetTop
+        return y
+      }
+      // Safe zone: the headline and caption block. A card's start position is pushed below it, with room for its tilt.
+      const scatterY = (p: HTMLElement, sy: number) => {
+        const safeBottom = layoutTop(head) + head.offsetHeight + 28
+        return Math.max(sy * window.innerHeight * 0.8, safeBottom - layoutTop(p))
+      }
+      let step = -1
+      const setStep = (progress: number) => {
+        // Midpoints between beats decide which caption is showing.
+        const i = progress < 0.165 ? 0 : progress < 0.5 ? 1 : 2
+        if (i === step) return
+        step = i
+        dots.forEach((d, n) => (d.dataset.on = String(n === i)))
+        label.textContent = `${i + 1} of 3`
+      }
+      setStep(0)
       const tl = gsap.timeline({
         defaults: { ease: EASE.scrub },
         scrollTrigger: {
           trigger: el,
           start: 'top top',
-          end: `+=${PIN.long * 100}%`,
-          scrub: 1,
+          end: `+=${PIN.short * 100}%`,
+          scrub: 0.6,
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          snap: { snapTo: BEATS, duration: 0.4, ease: 'power2.out', delay: 0.08, inertia: false },
+          onUpdate: (self) => setStep(self.progress),
         },
       })
-      // Chaos: pieces start scattered across the viewport, tilted, in their old tools.
+      // Chaos to order: cards start scattered beside and below the safe zone, tilted, in their old tools.
       pieces.forEach((p, i) => {
         const [sx, sy, rot] = scatterOf(p)
         tl.fromTo(
           p,
-          { x: () => sx * window.innerWidth * 0.78, y: () => sy * window.innerHeight * 0.8, rotate: rot, scale: 0.92 },
-          { x: 0, y: 0, rotate: 0, scale: 1, duration: 0.62 },
-          0.04 + i * 0.025,
+          { x: () => sx * window.innerWidth * 0.78, y: () => scatterY(p, sy), rotate: rot, scale: 0.92 },
+          { x: 0, y: 0, rotate: 0, scale: 1, duration: 0.7 },
+          0.02 + i * 0.02,
         )
-        tl.fromTo(p.querySelector('[data-messy]'), { opacity: 1, filter: 'blur(0px)' }, { opacity: 0, filter: 'blur(4px)', duration: 0.12 }, 0.5 + i * 0.02)
-        tl.fromTo(p.querySelector('[data-clean]'), { opacity: 0 }, { opacity: 1, duration: 0.12 }, 0.54 + i * 0.02)
+        tl.fromTo(p.querySelector('[data-messy]'), { opacity: 1 }, { opacity: 0, duration: 0.08 }, 0.72 + i * 0.012)
+        tl.fromTo(p.querySelector('[data-clean]'), { opacity: 0 }, { opacity: 1, duration: 0.08 }, 0.75 + i * 0.012)
       })
-      // Order: the frame appears around the pieces as they snap in.
-      tl.fromTo($('[data-frame]'), { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.2 }, 0.58)
-      // Captions swap with the scroll.
-      const caps = $('[data-cap]')
-      tl.fromTo(caps[0], { opacity: 1, yPercent: 0 }, { opacity: 0, yPercent: -60, duration: 0.06 }, 0.26)
-      tl.fromTo(caps[1], { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, duration: 0.06 }, 0.3)
-      tl.to(caps[1], { opacity: 0, yPercent: -60, duration: 0.06 }, 0.5)
-      tl.fromTo(caps[2], { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, duration: 0.06 }, 0.54)
-      tl.to(caps[2], { opacity: 0, yPercent: -60, duration: 0.06 }, 0.74)
-      tl.fromTo(caps[3], { opacity: 0, yPercent: 60, filter: 'blur(8px)' }, { opacity: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.08 }, 0.78)
-      tl.to({}, { duration: 0.12 }) // hold the finished board before releasing the pin
+      // Cards sit dimmed behind the caption layer while a caption is up, then come to full strength.
+      tl.fromTo(grid, { opacity: 0.85 }, { opacity: 1, duration: 0.08 }, 0.83)
+      tl.fromTo($('[data-frame]'), { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.14 }, 0.74)
+      // One caption at a time. The outgoing line rises and fades, then the incoming one rises from the mask.
+      // Each incoming line's first tween renders its start state (below the mask) straight away.
+      const swap = (out: HTMLElement, inn: HTMLElement, at: number) => {
+        tl.fromTo(out, { yPercent: 0, opacity: 1 }, { yPercent: -60, opacity: 0, duration: 0.05, immediateRender: false }, at - 0.05)
+        tl.fromTo(inn, { yPercent: 105, opacity: 1 }, { yPercent: 0, opacity: 1, duration: 0.06, immediateRender: true }, at)
+      }
+      swap(caps[0], caps[1], 0.165)
+      swap(caps[1], caps[2], 0.5)
+      swap(caps[2], caps[3], 0.83)
+      tl.to($('[data-steps]'), { opacity: 0, duration: 0.05 }, 0.83)
+      tl.to({}, { duration: 0.01 }, 0.99) // timeline length is exactly 1, so beats map to scroll progress
     } else {
-      // Compact: no pin. The board assembles once as it enters.
+      // Compact: no pin. Caption blocks rise in, then the board assembles once as it enters.
+      $('[data-mstep]').forEach((c) => {
+        gsap.from(c, { y: 28, opacity: 0, duration: DUR.m, ease: EASE.out, scrollTrigger: { trigger: c, start: 'top 88%', once: true } })
+      })
       const tl = gsap.timeline({ scrollTrigger: { trigger: $('[data-frame]')[0], start: 'top 75%', once: true } })
       pieces.forEach((p, i) => {
         const [sx, sy, rot] = scatterOf(p)
         tl.from(p, { x: sx * 120, y: sy * 160, rotate: rot, opacity: 0, duration: DUR.l, ease: EASE.out }, i * 0.06)
         tl.fromTo(p.querySelector('[data-messy]'), { opacity: 1 }, { opacity: 0, duration: DUR.s, ease: EASE.inOut }, 0.7 + i * 0.06)
         tl.fromTo(p.querySelector('[data-clean]'), { opacity: 0 }, { opacity: 1, duration: DUR.s, ease: EASE.inOut }, 0.75 + i * 0.06)
-      })
-      $('[data-cap]').forEach((c) => {
-        gsap.from(c, { y: 24, opacity: 0, duration: DUR.m, ease: EASE.out, scrollTrigger: { trigger: c, start: 'top 88%', once: true } })
       })
     }
   }, [])
@@ -220,24 +270,60 @@ export function Problem() {
         Skip to portals
       </a>
       <div className={s.inner}>
-        <div className={s.head}>
+        <div className={s.head} data-head>
           <p className="eyebrow" data-fade>
             {PROBLEM.eyebrow}
           </p>
           <h2 id="problem-title" data-title data-fade className={s.title}>
             {PROBLEM.title}
           </h2>
-          <div className={s.captions} data-fade>
-            {PROBLEM.captions.map((c) => (
-              <p key={c} className={s.cap} data-cap>
-                {c}
+          {/* Desktop: one caption at a time on a frosted backing, in a zone no card enters. */}
+          <Glass className={s.capBox} tone="strong" specular={false} data-capbox>
+            <div className={s.capMask}>
+              {PROBLEM.captions.map((c) => (
+                <p key={c.text} className={s.cap} data-cap>
+                  <Caption text={c.text} highlight={c.key} />
+                </p>
+              ))}
+              <p className={s.cap} data-cap>
+                Now it all lives in <span className="metal">CoMax.</span>
               </p>
+            </div>
+          </Glass>
+          <div className={s.steps} data-steps aria-hidden="true">
+            {PROBLEM.captions.map((c, i) => (
+              <span key={c.text} className={s.stepDot} data-dot data-on={i === 0} />
             ))}
-            <p className={`${s.cap} ${s.capEnd}`} data-cap>
-              Now it all lives in <span className="metal">CoMax.</span>
-            </p>
+            <span className={s.stepLabel} data-step-label>
+              1 of 3
+            </span>
           </div>
         </div>
+
+        {/* Phones and reduced motion: three short blocks, each with one illustration, then the assembled board. */}
+        <ol className={s.mobileSteps} role="list">
+          {PROBLEM.captions.map((c, i) => {
+            const piece = PIECES.find((p) => p.key === STEP_PIECES[i])
+            return (
+              <li key={c.text} className={s.mstep} data-mstep>
+                <span className={s.mstepNum} aria-hidden="true">
+                  {i + 1} of 3
+                </span>
+                <p className={s.mcap}>
+                  <Caption text={c.text} highlight={c.key} />
+                </p>
+                <div className={s.mcard} aria-hidden="true">
+                  {piece?.messy}
+                </div>
+              </li>
+            )
+          })}
+          <li className={s.mstep} data-mstep>
+            <p className={`${s.mcap} ${s.mcapEnd}`}>
+              Now it all lives in <span className="metal">CoMax.</span>
+            </p>
+          </li>
+        </ol>
 
         <div className={s.stage}>
           <Orbs
@@ -255,7 +341,7 @@ export function Problem() {
               <span className={s.frameEvent}>Spring Hackathon 2027</span>
             </div>
           </Glass>
-          <div className={s.grid} role="img" aria-label="Scattered spreadsheets, forms, chats and copied leaderboards come together into one CoMax dashboard with marks, registrations, announcements, a live leaderboard, history and attendance">
+          <div className={s.grid} data-grid role="img" aria-label="Scattered spreadsheets, forms, chats and copied leaderboards come together into one CoMax dashboard with marks, registrations, announcements, a live leaderboard, history and attendance">
             {PIECES.map((p) => (
               <div key={p.key} className={s.piece} data-piece data-scatter={p.scatter.join(',')} aria-hidden="true">
                 <div className={s.messy} data-messy>

@@ -11,7 +11,12 @@ export const HERO = {
 export const PROBLEM = {
   eyebrow: 'The problem',
   title: 'From spreadsheets to one platform',
-  captions: ['Marks typed into separate sheets.', 'Registrations spread across forms and inboxes.', 'No record of who won last year.'],
+  /** key: the words highlighted in maroon. Must appear in text exactly. */
+  captions: [
+    { text: 'Marks typed into separate sheets.', key: 'separate sheets' },
+    { text: 'Registrations spread across forms and inboxes.', key: 'forms and inboxes' },
+    { text: 'No record of who won last year.', key: 'No record' },
+  ],
   end: 'Now it all lives in CoMax.',
 }
 
