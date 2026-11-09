@@ -149,13 +149,12 @@ export const TEAM = {
   eyebrow: 'ATP Group 15',
   title: 'The team behind CoMax',
   members: [
-    'Methula Ranaweera',
-    'G. C. Rajarathna',
-    'Qumair Qwamy',
-    'Vadithya Odaka',
-    'Pesandi Hettiarachchi',
-    'Ravidu Abhimana',
-  ].map((name) => ({ name, role: '[Role]' })),
+    { name: 'G. C. Rajarathna', role: 'ML and AI' },
+    { name: 'Methula Ranaweera', role: 'Backend' },
+    { name: 'Qumair Qwamy', role: 'DevOps' },
+    { name: 'Pesandi Hettiarachchi', role: 'Frontend, ML and AI' },
+    { name: 'Vadithya Odaka', role: 'Frontend and backend' },
+  ],
 }
 
 export const CONTACT_COPY = {

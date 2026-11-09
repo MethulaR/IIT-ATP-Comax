@@ -62,7 +62,6 @@ Set these in `.env` (committed defaults), `.env.local` (your machine) or the hos
 
 ### Placeholders still to replace
 
-- `[Role]` for each team member: `TEAM` in `src/config/copy.ts`
 - `[contact email]` and the social links: `CONTACT` in `src/config/site.ts`
 - The privacy policy marks itself `[Draft, to be reviewed before launch]` and has a `[date]`
 
