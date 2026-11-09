@@ -6,7 +6,6 @@ import { FEATURES } from '../config/copy'
 import { FEATURE_SCREENS } from '../mocks/FeatureScreens'
 import { gsap, ScrollTrigger } from '../motion/gsap'
 import { useGsap } from '../motion/useGsap'
-import { DUR, EASE } from '../motion/motion'
 import { fadeIn, riseIn } from '../motion/reveals'
 import u from '../mocks/ui.module.css'
 import s from './Features.module.css'
@@ -50,58 +49,72 @@ export function Features() {
       return
     }
 
-    // Desktop: the device stays put, screens swap as each block crosses the centre.
+    // Desktop: the section pins. The heading and the device stay still; only the text column moves.
+    const column = $('[data-column]')[0] as HTMLElement
+    const viewport = column.parentElement as HTMLElement
+    const last = blocks.length - 1
     gsap.set(screens, { autoAlpha: 0 })
     gsap.set(screens[0], { autoAlpha: 1 })
     screens[0].setAttribute('data-active', '')
-    let current = 0
+    let current = -1
     const show = (i: number) => {
       if (i === current) return
-      const dir = i > current ? 1 : -1
-      const prev = screens[current]
-      const next = screens[i]
-      prev.removeAttribute('data-active')
-      next.setAttribute('data-active', '')
-      gsap.to(prev, { autoAlpha: 0, yPercent: -6 * dir, scale: 0.98, duration: DUR.s, ease: EASE.inOut, overwrite: true })
-      gsap.fromTo(
-        next,
-        { autoAlpha: 0, yPercent: 8 * dir, scale: 1.02, filter: 'blur(6px)' },
-        { autoAlpha: 1, yPercent: 0, scale: 1, filter: 'blur(0px)', duration: DUR.m, ease: EASE.out, overwrite: true },
-      )
+      blocks.forEach((b, j) => b.toggleAttribute('data-current', j === i))
       $('[data-dot]').forEach((d, j) => d.toggleAttribute('data-on', j === i))
+      // Only the screen crossfades. The frame never moves.
+      screens.forEach((sc, j) => {
+        sc.toggleAttribute('data-active', j === i)
+        gsap.to(sc, { autoAlpha: j === i ? 1 : 0, duration: 0.4, ease: 'power1.inOut', overwrite: true })
+      })
       current = i
     }
-    // The active block is the last one whose top has crossed 55% of the viewport.
-    // Derived from positions on every update, so fast scrolls and jumps can never leave a stale screen.
+    // y that puts a block's centre on the centre of the text viewport.
+    const centreY = (b: HTMLElement) => viewport.clientHeight / 2 - (b.offsetTop + b.offsetHeight / 2)
+    // The active feature is the one nearest the vertical centre, measured on every update.
     const sync = () => {
-      const line = window.innerHeight * 0.55
-      let i = 0
+      const mid = viewport.getBoundingClientRect().top + viewport.clientHeight / 2
+      let best = 0
+      let dist = Infinity
       blocks.forEach((b, j) => {
-        if (b.getBoundingClientRect().top < line) i = j
+        const r = b.getBoundingClientRect()
+        const d = Math.abs(r.top + r.height / 2 - mid)
+        if (d < dist) {
+          dist = d
+          best = j
+        }
       })
-      blocks.forEach((b, j) => b.toggleAttribute('data-current', j === i))
-      show(i)
+      show(best)
     }
-    ScrollTrigger.create({ trigger: $('ol')[0], start: 'top bottom', end: 'bottom top', onUpdate: sync, onRefresh: sync })
-    blocks[0].setAttribute('data-current', '')
-    blocks.forEach((b) => {
-      gsap.from(b.querySelector('[data-num]'), {
-        yPercent: 100,
-        duration: DUR.m,
-        ease: EASE.out,
-        scrollTrigger: { trigger: b, start: 'top 70%', once: true },
-      })
-    })
-    // The device leans in as the section arrives, then settles.
     gsap.fromTo(
-      $('[data-device]'),
-      { rotateX: 12, y: 60, scale: 0.94 },
-      { rotateX: 0, y: 0, scale: 1, ease: EASE.scrub, scrollTrigger: { trigger: el, start: 'top 85%', end: 'top 15%', scrub: 1 } },
+      column,
+      { y: () => centreY(blocks[0]) },
+      {
+        y: () => centreY(blocks[last]),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top top',
+          // About 60% of the viewport per feature.
+          end: `+=${blocks.length * 60}%`,
+          scrub: 0.5,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          snap: { snapTo: 1 / last, duration: { min: 0.2, max: 0.6 }, delay: 0.1, ease: 'power1.inOut', inertia: false },
+          onRefresh: sync,
+        },
+        // Measured from the column's own frames, so the active feature follows the smoothed scrub.
+        onUpdate: sync,
+      },
     )
+    show(0)
   }, [])
 
   return (
     <section ref={root} id="features" className={s.features} aria-labelledby="features-title">
+      <a className="skip-section" href="#how">
+        Skip to how it works
+      </a>
       <div className="container">
         <div className={s.head}>
           <p className="eyebrow">{FEATURES.eyebrow}</p>
@@ -136,7 +149,8 @@ export function Features() {
               </div>
             </div>
           </div>
-          <ol className={s.blocks} role="list">
+          <div className={s.viewport}>
+          <ol className={s.blocks} role="list" data-column>
             {FEATURES.items.map((it, i) => (
               <li key={it.key} className={s.block} data-block>
                 <p className={s.num} aria-hidden="true">
@@ -154,6 +168,7 @@ export function Features() {
               </li>
             ))}
           </ol>
+          </div>
         </div>
       </div>
     </section>

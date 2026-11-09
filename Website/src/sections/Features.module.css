@@ -108,33 +108,70 @@
   background: var(--maroon-700);
 }
 
-/* Desktop with motion: sticky device on the left, blocks scroll past on the right. */
+/* Desktop with motion: the section pins for six features. Heading and device stay still,
+   the text column moves up through a masked viewport on the right. */
 @media (prefers-reduced-motion: no-preference) and (min-width: 1024px) and (min-height: 560px) {
+  .features {
+    height: 100vh;
+    padding-block: calc(var(--nav-h) + 36px) 32px;
+    overflow: clip;
+  }
+  .features > :global(.container) {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 100%;
+  }
+  .head {
+    margin-bottom: clamp(20px, 3.5vh, 40px);
+    gap: 12px;
+  }
+  .title {
+    font-size: clamp(2rem, 1rem + 2.4vw, 3.5rem);
+  }
   .layout {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
     gap: clamp(40px, 5vw, 80px);
+    min-height: 0;
   }
   .sticky {
-    display: block;
-    position: sticky;
-    top: calc(50vh - 240px);
-    align-self: start;
+    display: grid;
+    align-content: center;
+    min-height: 0;
+  }
+  .device {
+    width: min(100%, calc((100vh - 360px) * 1.62));
+    margin-inline: auto;
+  }
+  .viewport {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+    mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+  }
+  .blocks {
+    gap: 0;
+    will-change: transform;
   }
   .block {
     position: relative;
-    min-height: 78vh;
+    min-height: 38vh;
     align-content: center;
     padding-left: 28px;
+    opacity: 0.35;
+    transition: opacity 0.4s ease;
   }
-  /* Active block: a maroon rule grows beside it. Inactive text keeps full contrast. */
+  .block[data-current] {
+    opacity: 1;
+  }
+  /* Active block: a maroon side line. */
   .block::before {
     content: '';
     position: absolute;
     left: 0;
     top: 50%;
     width: 2px;
-    height: 160px;
-    margin-top: -80px;
+    height: 140px;
+    margin-top: -70px;
     border-radius: 2px;
     background: linear-gradient(180deg, var(--maroon-300), var(--maroon-700));
     transform: scaleY(0);
@@ -142,16 +179,6 @@
   }
   .block[data-current]::before {
     transform: scaleY(1);
-  }
-  .block .blockTitle {
-    color: var(--grey-700);
-    transition: color var(--dur-m) var(--ease-out);
-  }
-  .block[data-current] .blockTitle {
-    color: var(--ink);
-  }
-  .block:first-child {
-    min-height: 60vh;
   }
   .inline {
     display: none;
