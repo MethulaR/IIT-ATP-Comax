@@ -47,17 +47,22 @@ export function stopSmoothScroll() {
   tick = null
 }
 
+type ScrollOpts = { immediate?: boolean; offset?: number; onComplete?: () => void }
+
 /** Scroll to an element or y position, smooth when Lenis is running. */
-export function scrollToTarget(target: string | HTMLElement | number, opts: { immediate?: boolean } = {}) {
+export function scrollToTarget(target: string | HTMLElement | number, opts: ScrollOpts = {}) {
   const lenis = scrollState.lenis
   const el = typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target
   if (el === null) return
+  const offset = opts.offset ?? 0
   if (lenis) {
-    lenis.scrollTo(el as HTMLElement | number, { offset: 0, immediate: opts.immediate, duration: 1.4 })
+    lenis.scrollTo(el as HTMLElement | number, { offset, immediate: opts.immediate, duration: 1.4, onComplete: opts.onComplete })
+    if (opts.immediate) opts.onComplete?.()
     return
   }
-  if (typeof el === 'number') window.scrollTo({ top: el, behavior: 'auto' })
-  else el.scrollIntoView({ behavior: 'auto', block: 'start' })
+  const top = typeof el === 'number' ? el : el.getBoundingClientRect().top + window.scrollY
+  window.scrollTo({ top: top + offset, behavior: 'auto' })
+  if (opts.onComplete) requestAnimationFrame(() => requestAnimationFrame(opts.onComplete!))
 }
 
 /** Native scroll fallback for the metal sheen when Lenis is off. */

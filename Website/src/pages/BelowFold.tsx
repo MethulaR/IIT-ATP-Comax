@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import { ScrollTrigger } from '../motion/gsap'
+import { MQ } from '../motion/motion'
+import { createSpy, killSpy } from '../motion/spy'
 import { Problem } from '../sections/Problem'
 import { Portals } from '../sections/Portals'
 import { Features } from '../sections/Features'
@@ -16,8 +18,23 @@ import { Footer } from '../components/Footer'
 export default function BelowFold() {
   useEffect(() => {
     // All below the fold ScrollTriggers now exist, in page order. Measure once more.
-    const id = requestAnimationFrame(() => ScrollTrigger.refresh())
-    return () => cancelAnimationFrame(id)
+    // The nav scroll spy is created last, so it measures the pin spacers that now exist.
+    let id = requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+      createSpy()
+    })
+    // Pins are rebuilt when the media state changes, so the spy is too.
+    const queries = [MQ.desktop, MQ.reduce].map((q) => window.matchMedia(q))
+    const rebuild = () => {
+      cancelAnimationFrame(id)
+      id = requestAnimationFrame(createSpy)
+    }
+    queries.forEach((q) => q.addEventListener('change', rebuild))
+    return () => {
+      cancelAnimationFrame(id)
+      queries.forEach((q) => q.removeEventListener('change', rebuild))
+      killSpy()
+    }
   }, [])
   return (
     <>

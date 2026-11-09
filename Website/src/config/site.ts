@@ -6,13 +6,18 @@ export const PORTAL_URL: string = import.meta.env.VITE_PORTAL_URL || '#contact'
 export const SITE_URL: string = (import.meta.env.VITE_SITE_URL || 'https://comax.lk').replace(/\/$/, '')
 export const FORM_ENDPOINT: string = import.meta.env.VITE_FORM_ENDPOINT || ''
 
+/**
+ * Nav links and the sections each one covers for the scroll spy.
+ * A link stays active while any of its sections crosses the middle of the screen.
+ * Sections with no link of their own (scoring, trust, marquee) belong to the link above them.
+ */
 export const NAV_LINKS = [
-  { label: 'Product', hash: '#product' },
-  { label: 'Portals', hash: '#portals' },
-  { label: 'Features', hash: '#features' },
-  { label: 'How it works', hash: '#how' },
-  { label: 'Partners', hash: '#partners' },
-  { label: 'Team', hash: '#team' },
+  { label: 'Product', hash: '#product', sections: ['product'] },
+  { label: 'Portals', hash: '#portals', sections: ['portals'] },
+  { label: 'Features', hash: '#features', sections: ['features', 'scoring'] },
+  { label: 'How it works', hash: '#how', sections: ['how', 'trust'] },
+  { label: 'Partners', hash: '#partners', sections: ['partners', 'marquee'] },
+  { label: 'Team', hash: '#team', sections: ['team'] },
 ] as const
 
 /** Placeholders until the team confirms real handles. */
