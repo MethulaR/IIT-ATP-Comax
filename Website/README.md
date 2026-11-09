@@ -74,7 +74,8 @@ src/
   config/      copy.ts (all words), site.ts (URLs, nav, contact)
   styles/      tokens.css, base.css, metal.css
   motion/      gsap.ts (plugins, registered once), motion.ts (eases, durations, media queries),
-               scroll.ts (Lenis on the GSAP ticker, shared velocity), useGsap.ts, reveals.ts, intro.ts
+               scroll.ts (Lenis on the GSAP ticker, shared velocity), spy.ts (nav scroll spy),
+               useGsap.ts, reveals.ts, intro.ts
   components/  Glass, Button (magnetic, sheen), Monogram, Nav, Footer, Cursor, Orbs, Fit, Reveal
   mocks/       coded product screens with generic event data
   sections/    Loader, Hero, Problem, Portals, Features, Scoring, HowItWorks, Trust, Partner, Marquee, Team, Contact
@@ -102,6 +103,9 @@ npm run check                       # definition of done checks (widths, console
 npm run shots -- http://127.0.0.1:4173 --out=docs/screenshots
 node scripts/to-webp.mjs            # shrink the screenshots
 node scripts/record.mjs             # animated WebP of a full scroll
+node scripts/v2-spy.mjs             # nav scroll spy: every section down and up, plus a link click
+node scripts/v2-dashboard.mjs       # hero dashboard: scrub screenshots and the sharpness test
+node scripts/v2-problem.mjs         # problem section: beats, overlaps, contrast, scroll length, snap
 ```
 
 All scripts drive the locally installed Google Chrome through Playwright.
@@ -131,8 +135,12 @@ Lighthouse 12. Reports are in `docs/lighthouse/`.
 - in reduced motion nothing is pinned and all text is visible
 - form validation works, and the success state is announced and focused
 
+## Change request 2
+
+What changed and how each item was checked is in [`docs/CHANGES-v2.md`](docs/CHANGES-v2.md). Screenshots are in `docs/screenshots/v2`.
+
 ## Notes
 
 - **Mock screens are coded, not images.** The wireframe images and `VisioNEX_Website_Context.md` were not in the repo when this was built. The mocks in `src/mocks/` follow the feature list in the brief, use generic data ("Spring Hackathon 2027") and brand colours, and stay sharp at every size. To use the wireframes instead, drop AVIF or WebP files into `src/assets/` and render them inside `<Fit>`.
-- **Phase 2 WebGL hero object is not built.** The hero uses the CSS orb fallback. The structure leaves room for a lazy React Three Fiber canvas behind the hero cards.
+- **Phase 2 WebGL hero object is not built.** The hero uses the CSS orb fallback. The structure leaves room for a lazy React Three Fiber canvas behind the hero copy.
 - **The screen recording is an animated WebP** (`docs/screenshots/scroll-desktop.webp`), because Playwright's video capture needs an extra ffmpeg download. Run `npx playwright install ffmpeg` if you want WebM.
