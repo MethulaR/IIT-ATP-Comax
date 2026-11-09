@@ -1,12 +1,13 @@
 import { useId, useRef, useState } from 'react'
 import { CONTACT_COPY } from '../config/copy'
-import { CONTACT, FORM_ENDPOINT, PORTAL_URL } from '../config/site'
+import { FORM_ENDPOINT, PORTAL_URL } from '../config/site'
 import { Glass } from '../components/Glass'
 import { Button } from '../components/Button'
 import { Orbs } from '../components/Orbs'
 import { gsap } from '../motion/gsap'
 import { useGsap } from '../motion/useGsap'
 import { fadeIn, splitReveal } from '../motion/reveals'
+import { ContactRows, SocialIcons } from '../components/ContactLinks'
 import s from './Contact.module.css'
 
 type Field = 'name' | 'email' | 'organisation' | 'message'
@@ -132,17 +133,15 @@ export function Contact() {
           </div>
           <dl className={s.meta} data-fade>
             <div>
-              <dt>Email</dt>
-              <dd>{CONTACT.email}</dd>
+              <dt>Get in touch</dt>
+              <dd>
+                <ContactRows />
+              </dd>
             </div>
             <div>
-              <dt>Social</dt>
-              <dd className={s.social}>
-                {CONTACT.social.map((so) => (
-                  <a key={so.label} href={so.href} aria-label={`${so.label}, ${so.note}`}>
-                    {so.label}
-                  </a>
-                ))}
+              <dt>Follow CoMax</dt>
+              <dd>
+                <SocialIcons />
               </dd>
             </div>
           </dl>

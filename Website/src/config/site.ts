@@ -20,13 +20,14 @@ export const NAV_LINKS = [
   { label: 'Team', hash: '#team', sections: ['team'] },
 ] as const
 
-/** Placeholders until the team confirms real handles. */
 export const CONTACT = {
-  email: '[contact email]',
-  emailHref: '#contact',
+  email: 'comax.digital@gmail.com',
+  emailHref: 'mailto:comax.digital@gmail.com',
+  phone: '077 439 0896',
+  phoneHref: 'tel:+94774390896',
   social: [
-    { label: 'LinkedIn', href: '#contact', note: 'link coming soon' },
-    { label: 'Instagram', href: '#contact', note: 'link coming soon' },
-    { label: 'GitHub', href: '#contact', note: 'link coming soon' },
+    { key: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/comax.digital' },
+    { key: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/comax.digital' },
+    { key: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/comax.digital' },
   ],
 } as const

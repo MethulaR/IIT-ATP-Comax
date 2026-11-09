@@ -16,7 +16,7 @@ export default function Privacy() {
         </p>
         <div className={s.prose}>
           <h2>Who we are</h2>
-          <p>CoMax is built by ATP Group 15 at IIT, Sri Lanka. You can reach us at [contact email].</p>
+          <p>CoMax is built by ATP Group 15 at IIT, Sri Lanka. You can reach us at comax.digital@gmail.com.</p>
           <h2>What we collect</h2>
           <p>
             When you use the contact form we collect your name, email address, organisation and your message. We use them only to reply to
@@ -36,7 +36,7 @@ export default function Privacy() {
           <h2>Your rights</h2>
           <p>
             Under Sri Lanka&rsquo;s Personal Data Protection Act No. 9 of 2022 you can ask to see, correct or delete the personal data we
-            hold about you, and withdraw consent at any time. Contact us at [contact email] and we will respond within a reasonable time.
+            hold about you, and withdraw consent at any time. Contact us at comax.digital@gmail.com and we will respond within a reasonable time.
           </p>
           <h2>Changes</h2>
           <p>If this policy changes we will update this page and the date below.</p>

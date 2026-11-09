@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Logo } from './Monogram'
-import { CONTACT, NAV_LINKS } from '../config/site'
+import { NAV_LINKS } from '../config/site'
+import { ContactRows, SocialIcons } from './ContactLinks'
 import { gsap } from '../motion/gsap'
 import { useGsap } from '../motion/useGsap'
 import { EASE } from '../motion/motion'
@@ -44,18 +45,12 @@ export function Footer() {
             <li>
               <Link to="/privacy">Privacy policy</Link>
             </li>
-            <li>
-              <a href={onHome ? '#contact' : '/#contact'}>Contact</a>
-            </li>
-            {CONTACT.social.map((so) => (
-              <li key={so.label}>
-                <a href={onHome ? so.href : `/${so.href}`} aria-label={`${so.label}, ${so.note}`}>
-                  {so.label}
-                </a>
-              </li>
-            ))}
           </ul>
         </nav>
+        <div className={s.reach}>
+          <ContactRows />
+          <SocialIcons />
+        </div>
       </div>
       <div className={`container ${s.bottom}`}>
         <p>&copy; ATP Group 15, IIT, 2026</p>

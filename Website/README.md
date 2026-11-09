@@ -53,7 +53,7 @@ Set these in `.env` (committed defaults), `.env.local` (your machine) or the hos
 | What | Where |
 | --- | --- |
 | All section copy | `src/config/copy.ts` |
-| Nav links, contact email, social links | `src/config/site.ts` |
+| Nav links, contact email, phone, social links | `src/config/site.ts` |
 | Colours, type scale, spacing, glass and metal tokens | `src/styles/tokens.css` |
 | Shared eases, durations, breakpoints, pin lengths | `src/motion/motion.ts` |
 | Product mock screens | `src/mocks/` |
@@ -62,7 +62,6 @@ Set these in `.env` (committed defaults), `.env.local` (your machine) or the hos
 
 ### Placeholders still to replace
 
-- `[contact email]` and the social links: `CONTACT` in `src/config/site.ts`
 - The privacy policy marks itself `[Draft, to be reviewed before launch]` and has a `[date]`
 
 ## How it is built

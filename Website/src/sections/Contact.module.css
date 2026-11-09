@@ -46,16 +46,6 @@
   margin: 0;
   font-weight: 500;
 }
-.social {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 16px;
-}
-.social a {
-  color: var(--maroon-700);
-  text-underline-offset: 4px;
-  padding: 6px 0;
-}
 
 .formCard {
   padding: clamp(24px, 3.4vw, 40px);
