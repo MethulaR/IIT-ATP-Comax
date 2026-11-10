@@ -46,7 +46,7 @@ Set these in `.env` (committed defaults), `.env.local` (your machine) or the hos
 | --- | --- | --- |
 | `VITE_PORTAL_URL` | Where every **Request a demo** button points. Change it to the live CoMax portal later. | `#contact` |
 | `VITE_SITE_URL` | Canonical origin for canonical, Open Graph, robots and sitemap. | `https://comaxdigital.com` |
-| `VITE_FORM_ENDPOINT` | URL that receives the contact form as JSON (Formspree, Basin, your API). **Leave it empty and the form runs in preview mode: it validates and shows success, but sends nothing.** Set it before launch. | empty |
+| `VITE_FORM_ENDPOINT` | URL that receives the contact form as JSON. Set to FormSubmit, which emails each request to comax.digital@gmail.com. Leave it empty and the form runs in preview mode (validates, sends nothing). | `https://formsubmit.co/ajax/comax.digital@gmail.com` |
 
 ## Where to change things
 

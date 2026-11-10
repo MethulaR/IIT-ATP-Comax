@@ -154,3 +154,12 @@
     grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   }
 }
+
+/* Spam trap field: off screen, never focused, never read aloud. */
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}

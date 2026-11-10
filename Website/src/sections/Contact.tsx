@@ -61,12 +61,28 @@ export function Contact() {
     setStatus('sending')
     try {
       if (FORM_ENDPOINT) {
+        const trap = formRef.current?.querySelector<HTMLInputElement>('[name="_honey"]')?.value ?? ''
         const res = await fetch(FORM_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(values),
+          body: JSON.stringify({
+            Name: values.name.trim(),
+            Email: values.email.trim(),
+            Organisation: values.organisation.trim(),
+            Message: values.message.trim(),
+            // FormSubmit options: subject line, reply goes to the visitor, a clean table layout, no captcha page.
+            _subject: `CoMax demo request from ${values.name.trim()} (${values.organisation.trim()})`,
+            _replyto: values.email.trim(),
+            _template: 'table',
+            _captcha: 'false',
+            // Spam trap: people never see this field, bots fill it in and FormSubmit drops the message.
+            _honey: trap,
+          }),
         })
         if (!res.ok) throw new Error(String(res.status))
+        // FormSubmit can answer 200 with success "false" (for example before the inbox is activated).
+        const data = await res.json().catch(() => ({}))
+        if (data && (data.success === false || data.success === 'false')) throw new Error(String(data.message || 'not sent'))
       } else {
         await new Promise((r) => setTimeout(r, 600))
       }
@@ -179,9 +195,10 @@ export function Contact() {
               </div>
               {input('organisation', 'Organisation', 'text', 'organization')}
               {input('message', 'Tell us about your event')}
+              <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className={s.trap} />
               {status === 'error' && (
                 <p className={s.error} role="alert">
-                  Something went wrong sending that. Please try again in a moment.
+                  Something went wrong sending that. Please try again in a moment, or email us at comax.digital@gmail.com.
                 </p>
               )}
               <Button type="submit" size="l" disabled={status === 'sending'} magnetic={false}>

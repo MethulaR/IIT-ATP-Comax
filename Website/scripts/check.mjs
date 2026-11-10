@@ -144,6 +144,8 @@ for (const width of [360, 390, 768, 1024, 1440, 1920]) {
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
   const p = await ctx.newPage()
+  // Never send real email from a test: answer the form service locally.
+  await p.route('https://formsubmit.co/**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"success":"true"}' }))
   await p.goto(base + '/#contact')
   await waitIntro(p)
   await p.waitForSelector('#contact-form')
