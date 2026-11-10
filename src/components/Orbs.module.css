@@ -1,0 +1,35 @@
+.layer {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  translate: -50% -50%;
+  opacity: 0.9;
+}
+.maroon {
+  background: radial-gradient(closest-side, rgba(142, 27, 48, 0.42), rgba(142, 27, 48, 0.16) 45%, rgba(142, 27, 48, 0) 100%);
+}
+.rose {
+  background: radial-gradient(closest-side, rgba(184, 71, 92, 0.34), rgba(184, 71, 92, 0.12) 50%, rgba(184, 71, 92, 0) 100%);
+}
+.silver {
+  background: radial-gradient(closest-side, rgba(201, 203, 209, 0.9), rgba(201, 203, 209, 0.35) 50%, rgba(201, 203, 209, 0) 100%);
+}
+.d1 { animation: drift1 26s var(--ease-in-out) infinite alternate; }
+.d2 { animation: drift2 32s var(--ease-in-out) infinite alternate; }
+.d3 { animation: drift3 38s var(--ease-in-out) infinite alternate; }
+
+@keyframes drift1 {
+  to { transform: translate3d(6vw, -4vh, 0) scale(1.08); }
+}
+@keyframes drift2 {
+  to { transform: translate3d(-5vw, 5vh, 0) scale(0.94); }
+}
+@keyframes drift3 {
+  to { transform: translate3d(3vw, 6vh, 0) scale(1.12); }
+}
