@@ -1,0 +1,116 @@
+.how {
+  position: relative;
+  padding-block: var(--section-y);
+  background: linear-gradient(180deg, var(--paper), var(--white) 50%, var(--paper));
+}
+.head {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  text-align: center;
+  margin-bottom: clamp(56px, 8vw, 110px);
+}
+.title {
+  max-width: 14ch;
+}
+.track {
+  position: relative;
+  --x: 27px;
+}
+.line {
+  position: absolute;
+  left: calc(var(--x) - 2px);
+  top: 0;
+  width: 4px;
+  height: 100%;
+  overflow: visible;
+}
+.tip {
+  position: absolute;
+  left: var(--x);
+  top: 0;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--maroon-500);
+  box-shadow: 0 0 0 4px rgba(142, 27, 48, 0.15), 0 0 24px 6px rgba(142, 27, 48, 0.35);
+}
+.steps {
+  display: grid;
+  gap: clamp(48px, 8vw, 96px);
+  padding-block: 24px;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--grey-300), 0 8px 20px -12px rgba(26, 26, 30, 0.3);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--grey-700);
+  transition:
+    background-color var(--dur-m) var(--ease-out),
+    color var(--dur-m) var(--ease-out),
+    box-shadow var(--dur-m) var(--ease-out);
+}
+.step[data-lit] .node {
+  color: var(--white);
+  background: radial-gradient(120% 120% at 30% 20%, var(--maroon-300), var(--maroon-700) 55%, var(--maroon-900));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 0 6px rgba(142, 27, 48, 0.1), 0 12px 30px -10px rgba(107, 20, 36, 0.6);
+}
+.text {
+  display: grid;
+  gap: 8px;
+  padding-top: 8px;
+}
+.stepTitle {
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+  letter-spacing: -0.03em;
+  color: var(--grey-700);
+  transition: color var(--dur-m) var(--ease-out);
+}
+.step[data-lit] .stepTitle {
+  color: var(--ink);
+}
+.stepBody {
+  color: var(--grey-700);
+  max-width: 40ch;
+}
+
+/* Wide: the line runs down the middle and steps alternate. */
+@media (min-width: 900px) {
+  .track {
+    --x: 50%;
+  }
+  .step {
+    grid-template-columns: 1fr 54px 1fr;
+    gap: 40px;
+  }
+  .node {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .text {
+    grid-row: 1;
+    grid-column: 3;
+  }
+  .step:nth-child(even) .text {
+    grid-column: 1;
+    text-align: right;
+    justify-items: end;
+  }
+}
