@@ -1,0 +1,209 @@
+.wrap {
+  position: fixed;
+  inset: 14px 0 auto;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding-inline: 12px;
+  pointer-events: none;
+}
+.bar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 1060px);
+  min-height: var(--nav-h);
+  padding: 8px 8px 8px 20px;
+  transition: background-color var(--dur-m) var(--ease-out);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%),
+    rgba(255, 255, 255, 0.38);
+}
+.bar[data-solid='true'] {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 60%),
+    rgba(247, 247, 248, 0.72);
+}
+.logo {
+  display: inline-flex;
+  padding: 6px 4px;
+  margin-right: auto;
+  text-decoration: none;
+  border-radius: 999px;
+}
+.links {
+  position: relative;
+}
+.links ul {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 2px;
+}
+.links a {
+  display: inline-flex;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--grey-700);
+  text-decoration: none;
+  transition: background-color var(--dur-s) var(--ease-out), color var(--dur-s) var(--ease-out);
+}
+.links a:hover {
+  color: var(--maroon-700);
+}
+.links a[aria-current] {
+  color: var(--maroon-700);
+}
+
+/* The active pill: one liquid glass lozenge that slides between links. Decorative. */
+.pill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.55) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(107, 20, 36, 0.18),
+    0 0 0 1px rgba(212, 212, 217, 0.75),
+    0 6px 16px -8px rgba(61, 10, 20, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
+}
+.pill[data-on='true'] {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: none !important;
+  }
+}
+
+/* Thin page progress line, shown under the collapsed nav. */
+.progress {
+  display: none;
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--maroon-700);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+  pointer-events: none;
+}
+.cta {
+  margin-left: 8px;
+}
+.menuBtn {
+  display: none;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(212, 212, 217, 0.9);
+  cursor: pointer;
+  place-items: center;
+}
+.burger,
+.burger::before {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform var(--dur-s) var(--ease-out);
+}
+.burger {
+  position: relative;
+  transform: translateY(-3px);
+}
+.burger::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+}
+.burger[data-open='true'] {
+  transform: rotate(45deg);
+}
+.burger[data-open='true']::before {
+  transform: translateY(-6px) rotate(-90deg);
+}
+
+.sheet {
+  position: absolute;
+  top: calc(var(--nav-h) + 12px);
+  left: 12px;
+  right: 12px;
+  pointer-events: auto;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+.sheet[hidden] {
+  display: none;
+}
+.sheet ul {
+  display: grid;
+}
+.sheet a:not([class]) {
+  display: block;
+  padding: 14px 12px;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212, 212, 217, 0.6);
+  border-radius: 10px;
+}
+.sheet a:not([class])[aria-current] {
+  color: var(--maroon-700);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: inset 3px 0 0 var(--maroon-700);
+}
+.sheet > span {
+  justify-self: stretch;
+}
+.sheet > span > a {
+  width: 100%;
+}
+
+@media (max-width: 1060px) {
+  .links a {
+    padding-inline: 10px;
+  }
+}
+@media (max-width: 980px) {
+  .links,
+  .cta {
+    display: none;
+  }
+  .menuBtn {
+    display: grid;
+  }
+  .progress {
+    display: block;
+  }
+  .bar {
+    padding-left: 16px;
+  }
+}
+@media (min-width: 981px) {
+  .sheet {
+    display: none !important;
+  }
+}
