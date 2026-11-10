@@ -1,0 +1,10 @@
+# Not needed on Vercel: the build runs from package.json and src/.
+node_modules
+dist
+dist-ssr
+team-zips
+docs
+Logos
+.claude
+.DS_Store
+*.local

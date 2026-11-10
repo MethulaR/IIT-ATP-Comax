@@ -22,7 +22,7 @@ export function DashboardMock({ compact = false, fill = false }: { compact?: boo
         <i />
         <i />
         <i />
-        <span className={u.url}>app.comax.lk/springhackathon2027</span>
+        <span className={u.url}>app.comaxdigital.com/springhackathon2027</span>
       </div>
       <div className={u.body} aria-hidden="true" style={compact ? { gridTemplateColumns: '1fr' } : undefined}>
         {!compact && (

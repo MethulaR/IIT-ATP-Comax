@@ -17,7 +17,7 @@ function Chrome({ url }: { url: string }) {
 export function PublicMock() {
   return (
     <div className={u.screen} aria-hidden="true">
-      <Chrome url="springhackathon2027.comax.lk" />
+      <Chrome url="springhackathon2027.comaxdigital.com" />
       <div className={s.pub}>
         <div className={s.pubHero}>
           <span className={s.pubKicker}>Spring Hackathon 2027</span>
@@ -52,7 +52,7 @@ export function PublicMock() {
 export function ParticipantMock() {
   return (
     <div className={u.screen} aria-hidden="true">
-      <Chrome url="app.comax.lk/me" />
+      <Chrome url="app.comaxdigital.com/me" />
       <div className={s.part}>
         <div className={s.idCard}>
           <div className={s.idTop}>
@@ -96,7 +96,7 @@ export function ParticipantMock() {
 export function JudgeMock() {
   return (
     <div className={u.screen} aria-hidden="true">
-      <Chrome url="app.comax.lk/judge" />
+      <Chrome url="app.comaxdigital.com/judge" />
       <div className={s.judge}>
         <div className={u.head}>
           <div>
@@ -134,7 +134,7 @@ export function JudgeMock() {
 export function OrganizerMock() {
   return (
     <div className={u.screen} aria-hidden="true">
-      <Chrome url="app.comax.lk/organizer" />
+      <Chrome url="app.comaxdigital.com/organizer" />
       <div className={s.org}>
         <div className={u.tiles} style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}>
           {[

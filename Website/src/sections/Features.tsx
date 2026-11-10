@@ -130,7 +130,7 @@ export function Features() {
                   <i />
                   <i />
                   <i />
-                  <span>app.comax.lk</span>
+                  <span>app.comaxdigital.com</span>
                 </div>
                 <div className={s.deviceScreen}>
                   <Fit w={W} h={H}>

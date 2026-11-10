@@ -3,7 +3,7 @@
  * All visible copy for the sections lives in src/config/copy.ts.
  */
 export const PORTAL_URL: string = import.meta.env.VITE_PORTAL_URL || '#contact'
-export const SITE_URL: string = (import.meta.env.VITE_SITE_URL || 'https://comax.lk').replace(/\/$/, '')
+export const SITE_URL: string = (import.meta.env.VITE_SITE_URL || 'https://comaxdigital.com').replace(/\/$/, '')
 export const FORM_ENDPOINT: string = import.meta.env.VITE_FORM_ENDPOINT || ''
 
 /**
