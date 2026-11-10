@@ -1,0 +1,103 @@
+.platform {
+  position: relative;
+  overflow: clip;
+  background: linear-gradient(180deg, var(--paper), var(--mist) 55%, var(--paper));
+}
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(32px, 5vw, 56px);
+  max-width: calc(var(--maxw) + var(--gutter) * 2);
+  margin-inline: auto;
+  /* Room above the heading so the fixed nav never sits over the content. */
+  padding: clamp(56px, 8vw, 96px) var(--gutter) var(--section-y);
+}
+.head {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  text-align: center;
+}
+.title {
+  max-width: 16ch;
+  font-size: clamp(2.25rem, 1.2rem + 3.4vw, 4.5rem);
+}
+.sub {
+  max-width: 620px;
+}
+
+/* Same glass as the portal panels. */
+.card {
+  padding: clamp(8px, 1vw, 12px);
+  transform-origin: 50% 100%;
+}
+.screen {
+  overflow: hidden;
+  border-radius: calc(var(--radius-xl) - 8px);
+  box-shadow: 0 0 0 1px rgba(212, 212, 217, 0.9);
+  background: var(--white);
+}
+/* The mock is laid out at real size: --u follows the card width (1000 design px across, about 14px text at 1440). */
+.wide {
+  container-type: inline-size;
+  aspect-ratio: 16 / 9.2;
+}
+.wide > * {
+  --u: max(0.8px, calc(100cqw / 1000));
+}
+.narrow {
+  display: none;
+  --u: 1.04px;
+}
+
+.points {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 32px;
+}
+.points li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.tick {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--maroon-700);
+}
+.tick::after {
+  content: '';
+  position: absolute;
+  left: 7.5px;
+  top: 4.5px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+@media (max-width: 639px) {
+  .wide {
+    display: none;
+  }
+  .narrow {
+    display: block;
+  }
+  .card {
+    padding: 6px;
+  }
+  .points {
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+    margin-inline: auto;
+  }
+}
