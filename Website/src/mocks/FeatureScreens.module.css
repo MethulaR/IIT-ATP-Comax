@@ -1,0 +1,336 @@
+@property --n {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.pad {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 20px 22px;
+  height: 100%;
+  font-size: 12.5px;
+}
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.vrow,
+.checkin,
+.result,
+.hist {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--mist);
+}
+.cap {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.capHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 500;
+}
+
+/* Every loop is paused until its screen is the active one. */
+.pad * {
+  animation-play-state: paused;
+}
+:global([data-active]) .pad * {
+  animation-play-state: running;
+}
+
+/* 1. Pending flips to verified */
+.swap {
+  display: grid;
+}
+.swap > * {
+  grid-area: 1 / 1;
+  justify-self: end;
+}
+.swapA {
+  animation: swapOut 3.2s var(--ease-in-out) infinite;
+}
+.swapB {
+  animation: swapIn 3.2s var(--ease-in-out) infinite;
+}
+@keyframes swapOut {
+  0%, 35% { opacity: 1; transform: none; }
+  45%, 90% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes swapIn {
+  0%, 35% { opacity: 0; transform: translateY(6px); }
+  45%, 90% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(6px); }
+}
+.grow {
+  animation: grow 3.2s var(--ease-out) infinite;
+}
+@keyframes grow {
+  0% { transform: scaleX(0); }
+  40%, 100% { transform: scaleX(1); }
+}
+
+/* 2. Test cases tick green */
+.code {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #1f1a1c;
+  color: #e9e6e7;
+}
+.codeBar {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 11px;
+  color: #b9b4b6;
+}
+.pre {
+  margin: 0;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.k {
+  color: #ef8fa1;
+}
+.tests {
+  display: grid;
+  gap: 4px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.test {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: #b9b4b6;
+  animation: testOn 3.6s steps(1) infinite;
+}
+.tick {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px #6d6669;
+  animation: tickOn 3.6s steps(1) infinite;
+  position: relative;
+}
+@keyframes testOn {
+  0% { color: #b9b4b6; }
+  1%, 88% { color: #e9e6e7; }
+  89%, 100% { color: #b9b4b6; }
+}
+@keyframes tickOn {
+  0% { background: transparent; box-shadow: inset 0 0 0 1.5px #6d6669; }
+  1%, 88% { background: #2f9e64; box-shadow: none; }
+  89%, 100% { background: transparent; box-shadow: inset 0 0 0 1.5px #6d6669; }
+}
+.test,
+.tick {
+  animation-fill-mode: backwards;
+}
+.score {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* 3. Slider knob nudges */
+.crit {
+  display: grid;
+  gap: 8px;
+  padding: 7px 0;
+}
+.slider {
+  position: relative;
+  height: 6px;
+  border-radius: 6px;
+  background: var(--mist);
+}
+.slider i {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 0 0 1.5px var(--maroon-700), 0 4px 10px -2px rgba(61, 10, 20, 0.4);
+}
+.knobMove {
+  animation: knob 3s var(--ease-in-out) infinite;
+}
+@keyframes knob {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-22px); }
+}
+
+/* 4. Totals count up */
+.tableHead,
+.trow {
+  display: grid;
+  grid-template-columns: 40px 1fr 90px 60px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+}
+.tableHead {
+  color: var(--grey-700);
+  font-size: 11px;
+  border-bottom: 1px solid var(--mist);
+}
+.trow {
+  border-bottom: 1px solid var(--mist);
+}
+.trow:first-of-type {
+  background: rgba(107, 20, 36, 0.05);
+}
+.count {
+  text-align: right;
+  font-weight: 650;
+  counter-reset: n var(--n);
+  animation: countUp 3.6s var(--ease-out) infinite;
+}
+.count::after {
+  content: counter(n);
+}
+@keyframes countUp {
+  0% { --n: 0; }
+  55%, 100% { --n: var(--to); }
+}
+.release {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--mist);
+  font-weight: 600;
+}
+.toggle {
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--maroon-700);
+  position: relative;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--white);
+}
+
+/* 5. QR scan line sweeps */
+.scanner {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #2a2326, #161214);
+}
+.scanner p {
+  color: #c9cbd1;
+}
+.qrWrap {
+  position: relative;
+  width: 150px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--white);
+  overflow: hidden;
+}
+.scanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--maroon-300), transparent);
+  box-shadow: 0 0 14px 4px rgba(184, 71, 92, 0.5);
+  animation: scan 2.4s var(--ease-in-out) infinite alternate;
+}
+@keyframes scan {
+  from { transform: translateY(6px); }
+  to { transform: translateY(146px); }
+}
+.checkin {
+  grid-template-columns: auto 1fr;
+  animation: checkIn 2.4s var(--ease-out) infinite;
+  animation-fill-mode: backwards;
+}
+@keyframes checkIn {
+  0% { opacity: 0.35; }
+  20%, 100% { opacity: 1; }
+}
+.tickStatic {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2f9e64;
+}
+
+/* 6. Search types itself */
+.hist {
+  grid-template-columns: auto 1fr auto;
+}
+.node {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--maroon-500);
+}
+.search {
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px var(--grey-300);
+  margin-bottom: 8px;
+}
+.typed {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+/* Typing without animating width: a white cover slides off in character steps. */
+.typed::after {
+  content: '';
+  position: absolute;
+  inset: -2px -4px;
+  background: var(--white);
+  box-shadow: -1.5px 0 0 var(--maroon-700);
+  transform-origin: right;
+  animation: type 4s steps(12) infinite;
+}
+@keyframes type {
+  0% { transform: scaleX(1); }
+  45%, 85% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+.result {
+  grid-template-columns: 40px 1fr auto;
+}
